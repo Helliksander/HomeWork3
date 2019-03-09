@@ -1,11 +1,11 @@
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import static java.lang.String.valueOf;
+
 
 public class DateOfBirth {
-
-    GregorianCalendar dateToUse = DateOfBirth.generateDateIfBirth();
-
 
 
     public static GregorianCalendar generateDateIfBirth() {
@@ -28,26 +28,28 @@ public class DateOfBirth {
 
     }
 
-    public static String prepareToCellInsertationFormat(GregorianCalendar randomizedDateOfBirth) {
+    public static ArrayList<String> prepareToCellInsertationFormat(GregorianCalendar randomizedDateOfBirth) {
 
-        String formatedString = (randomizedDateOfBirth.get(randomizedDateOfBirth.DAY_OF_MONTH) + "-" + (randomizedDateOfBirth.get(randomizedDateOfBirth.MONTH)+1) + "-" + randomizedDateOfBirth.get(randomizedDateOfBirth.YEAR));
-        return formatedString;
-    }
+        ArrayList<String> birhInfoArray = new ArrayList<String>(2);
 
-    public static int calculateCurrentAge(GregorianCalendar randomizedDateOfBirth) {
+        String formatedString = (randomizedDateOfBirth.get(randomizedDateOfBirth.DAY_OF_MONTH) + "-" + (randomizedDateOfBirth.get(randomizedDateOfBirth.MONTH)+1)
+                                                            + "-"  + randomizedDateOfBirth.get(randomizedDateOfBirth.YEAR));
 
         GregorianCalendar currentDateData = new GregorianCalendar();
         int currentYear = currentDateData.get(Calendar.YEAR);
         int currentDayOfTheYear = currentDateData.get(Calendar.DAY_OF_YEAR);
 
         int currentAge = currentYear - randomizedDateOfBirth.get(randomizedDateOfBirth.YEAR);
-        if (currentDayOfTheYear < randomizedDateOfBirth.DAY_OF_YEAR) {
+        if (currentDayOfTheYear > randomizedDateOfBirth.DAY_OF_YEAR) {
             currentAge--;
         }
 
-        return currentAge;
-
+        birhInfoArray.add(formatedString);
+        birhInfoArray.add(valueOf(currentAge));
+        return birhInfoArray;
     }
+
+
 
 
 }

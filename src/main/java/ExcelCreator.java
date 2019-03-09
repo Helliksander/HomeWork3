@@ -1,9 +1,12 @@
 import java.io.*;
+import java.util.ArrayList;
 
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFRow;
+
+import static java.lang.String.valueOf;
 
 
 public class ExcelCreator {
@@ -18,7 +21,6 @@ public class ExcelCreator {
         HSSFSheet theOnlySheet = workbook.createSheet("Единственная страница");
 
         File createdFile = new File("New file 1.xls");
-
 
         HSSFRow theHeadOfTheRows = theOnlySheet.createRow((short)0);
         theHeadOfTheRows.createCell(0).setCellValue("Имя");
@@ -50,8 +52,13 @@ public class ExcelCreator {
                 currentCircleRow.createCell(2).setCellValue(vocabularyValue.returnRandomValueFromReadTxtArray(vocabularyValue.readFromTxt(vocabularyValue.determinatorOfFile("Отчество (жен)"))));
                 currentCircleRow.createCell(4).setCellValue("Ж");
             }
-//            currentCircleRow.createCell(3).setCellValue(birthDate.calculateCurrentAge(birthDate.generateDateIfBirth())); - Причина, по которой не используется - работает некорректно
-            currentCircleRow.createCell(5).setCellValue(birthDate.prepareToCellInsertationFormat(birthDate.generateDateIfBirth()));
+
+            ArrayList<String> arrayFromDateOfBirth = birthDate.prepareToCellInsertationFormat(DateOfBirth.generateDateIfBirth());
+            String dateBirth = valueOf(arrayFromDateOfBirth.get(0));
+            String currentAge = valueOf(arrayFromDateOfBirth.get(1));
+
+            currentCircleRow.createCell(3).setCellValue(currentAge);
+            currentCircleRow.createCell(5).setCellValue(dateBirth);
             currentCircleRow.createCell(6).setCellValue(personInnNumber.deleteExcessSymbols(personInnNumber.generateNumberArray()));
             currentCircleRow.createCell(7).setCellValue(DateOfBirth.randomizeBetweenMinMax(100000, 700000));
             currentCircleRow.createCell(8).setCellValue(vocabularyValue.returnRandomValueFromReadTxtArray(vocabularyValue.readFromTxt(vocabularyValue.determinatorOfFile("Страна"))));
